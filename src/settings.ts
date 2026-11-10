@@ -13,8 +13,6 @@ export class MovieBuddySettingTab extends PluginSettingTab {
         this.plugin = plugin;
     }
 
-    display() {}
-
     getSettingDefinitions() {
         return [
             {
@@ -25,7 +23,7 @@ export class MovieBuddySettingTab extends PluginSettingTab {
                         return new SecretComponent(this.app, el)
                             .setValue(this.plugin.settings!.tmdbAccessToken || "")
                             .onChange(async (value) => {
-                                this.plugin.settings!.tmdbAccessToken = value;
+                                this.plugin.settings!.tmdbAccessToken = value ? value : undefined;
                                 await this.plugin.saveSettings();
                             });
                     });
