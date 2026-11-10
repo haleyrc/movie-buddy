@@ -54,7 +54,7 @@ export interface SearchResult {
 }
 
 export class TMDBClient {
-    constructor(private getAccessToken: () => string | undefined) {}
+    constructor(private getAccessToken: () => string | null) {}
 
     async getCredits(id: number): Promise<GetCreditsResponse> {
         return this.makeRequest<GetCreditsResponse>(`${API_URL}/movie/${id}/credits`);

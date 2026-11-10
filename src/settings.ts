@@ -1,8 +1,8 @@
-import { App, PluginSettingTab, SecretComponent, Setting, SettingDefinitionItem } from "obsidian";
+import { App, PluginSettingTab, SecretComponent, Setting } from "obsidian";
 import MovieBuddyPlugin from "./main";
 
 export interface MovieBuddyPluginSettings {
-    tmdbAccessToken: string;
+    tmdbAccessToken?: string;
 }
 
 export class MovieBuddySettingTab extends PluginSettingTab {
@@ -13,17 +13,19 @@ export class MovieBuddySettingTab extends PluginSettingTab {
         this.plugin = plugin;
     }
 
-    getSettingDefinitions(): SettingDefinitionItem[] {
+    display() {}
+
+    getSettingDefinitions() {
         return [
             {
                 desc: "See https://developer.themoviedb.org/docs/authentication-application",
                 name: "TMDB Access Token",
                 render: (setting: Setting) => {
                     setting.addComponent((el: HTMLElement) => {
-                        new SecretComponent(this.app, el)
-                            .setValue(this.plugin.settings.tmdbAccessToken)
+                        return new SecretComponent(this.app, el)
+                            .setValue(this.plugin.settings!.tmdbAccessToken || "")
                             .onChange(async (value) => {
-                                this.plugin.settings.tmdbAccessToken = value;
+                                this.plugin.settings!.tmdbAccessToken = value;
                                 await this.plugin.saveSettings();
                             });
                     });

@@ -6,12 +6,12 @@ import { renderMovie } from "@/render";
 import allMoviesBase from "@/render/templates/allmovies.base";
 
 export default class MovieBuddyPlugin extends Plugin {
-    tmdbc: TMDBClient;
-    settings: MovieBuddyPluginSettings;
+    tmdbc?: TMDBClient;
+    settings?: MovieBuddyPluginSettings;
 
     async onload() {
         await this.loadSettings();
-        this.tmdbc = new TMDBClient(() => this.app.secretStorage.getSecret(this.settings.tmdbAccessToken));
+        this.tmdbc = new TMDBClient(() => this.app.secretStorage.getSecret(this.settings!.tmdbAccessToken!));
         this.addSettingTab(new MovieBuddySettingTab(this.app, this));
         this.addCommand({
             id: "add-movie",
@@ -35,7 +35,7 @@ export default class MovieBuddyPlugin extends Plugin {
     private async runSearch(query: string) {
         let resp: SearchResponse;
         try {
-            resp = await this.tmdbc.search(query);
+            resp = await this.tmdbc!.search(query);
         } catch (e) {
             console.error(e);
             new Notice("Search failed. See console for details.");
@@ -55,8 +55,8 @@ export default class MovieBuddyPlugin extends Plugin {
 
     private async processResult(result: SearchResult) {
         try {
-            const movie = await this.tmdbc.getMovie(result.id);
-            const credits = await this.tmdbc.getCredits(result.id);
+            const movie = await this.tmdbc!.getMovie(result.id);
+            const credits = await this.tmdbc!.getCredits(result.id);
             await this.downloadPoster(movie);
 
             const content = renderMovie(movie, credits);
