@@ -1,0 +1,32 @@
+filters:
+  and:
+    - file.folder == "movies"
+formulas:
+  Title: file.asLink(file.properties.title)
+properties:
+  note.favorite:
+    displayName: ❤️
+  note.tagline:
+    displayName: Tagline
+views:
+  - type: cards
+    name: Marquis
+    order: []
+    sort:
+      - property: title
+        direction: ASC
+    image: note.poster
+    imageAspectRatio: 1.5
+    cardSize: 200
+  - type: table
+    name: Table
+    order:
+      - favorite
+      - formula.Title
+      - tagline
+    sort:
+      - property: title
+        direction: ASC
+    columnSize:
+      note.favorite: 64
+      formula.Title: 460

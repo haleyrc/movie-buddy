@@ -1,0 +1,16 @@
+.movie-search-result {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	.movie-thumbnail-placeholder {
+		width: 64px;
+		height: 96px;
+	}
+
+	img {
+		width: 64px;
+		height: 96px;
+		object-fit: cover;
+	}
+}
